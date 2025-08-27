@@ -1,24 +1,20 @@
 import pandas as pd
 import streamlit as st
 
-# CSV soubor (ve stejné složce jako skript)
+# Název souboru s tabulkou (musí být ve stejné složce jako tento skript)
 CSV_FILE = "podporovana_vozidla.csv"
 
-# Načtení CSV – české CSV často používá středník a kódování cp1250
+# Načtení CSV (zkusí UTF-8, pokud selže použije CP1250)
 try:
+    df = pd.read_csv(CSV_FILE, sep=';', encoding='utf-8')
+except UnicodeDecodeError:
     df = pd.read_csv(CSV_FILE, sep=';', encoding='cp1250')
-except FileNotFoundError:
-    st.error(f"Soubor {CSV_FILE} nebyl nalezen. Zkontrolujte cestu.")
-    st.stop()
-except Exception as e:
-    st.error(f"Chyba při načítání CSV: {e}")
-    st.stop()
 
 st.title("Kontrola podpory HW pro vozidla")
 
 # Formulář pro zadání vstupů
 with st.form("hledani_form"):
-    hw = st.text_input("Zadej typ HW (820, FMX003, FMX150)").strip()
+    hw = st.text_input("Zadej typ HW (818, 820, Teltonika 150)").strip()
     vyrobce = st.text_input("Zadej výrobce vozidla").strip()
     model = st.text_input("Zadej model vozidla").strip()
     submitted = st.form_submit_button("Hledat")
@@ -28,7 +24,7 @@ if submitted:
         filtrovano = df[
             (df['HW'].astype(str).str.strip().str.lower() == hw.lower()) &
             (df['Vyrobce'].astype(str).str.strip().str.lower() == vyrobce.lower()) &
-            (df['Model'].astype(str).str.strip().str.lower() == model.lower())
+            (df['Model'].astype(str).str.strip().str.lower().str.contains(model.lower(), na=False))
         ]
 
         if not filtrovano.empty:
@@ -36,8 +32,8 @@ if submitted:
 
             for _, radek in filtrovano.iterrows():
                 st.write("---")
-                if 'Model_+' in df.columns and pd.notna(radek.get('Model_+')):
-                    st.write(f"**Model +** {radek['Model_+']}")
+                if 'Model' in df.columns and pd.notna(radek.get('Model')):
+                    st.write(f"**Model:** {radek['Model']}")
                 if 'Rok' in df.columns and pd.notna(radek.get('Rok')):
                     st.write(f"**Rok:** {radek['Rok']}")
                 if 'CMD' in df.columns and pd.notna(radek.get('CMD')):
@@ -52,6 +48,8 @@ if submitted:
                     st.write(f"**Nádrž litry:** {radek['Nadrz litry']}")
                 if 'Nadrz %' in df.columns and pd.notna(radek.get('Nadrz %')):
                     st.write(f"**Nádrž %:** {radek['Nadrz %']}")
+                if 'Spotreba' in df.columns and pd.notna(radek.get('Spotreba')):
+                    st.write(f"**Spotřeba:** {radek['Spotreba']}")
         else:
             st.error("Ne, zadaná kombinace HW, výrobce a modelu nebyla nalezena.")
     else:
