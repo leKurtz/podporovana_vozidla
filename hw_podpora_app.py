@@ -1,11 +1,18 @@
 import pandas as pd
 import streamlit as st
 
-# Název souboru s tabulkou (musí být ve stejné složce jako tento skript)
-EXCEL_FILE = "podporovana_vozidla.xlsx"
+# CSV soubor (ve stejné složce jako skript)
+CSV_FILE = "podporovana_vozidla.csv"
 
-# Načtení Excelu
-df = pd.read_excel(EXCEL_FILE)
+# Načtení CSV – české CSV často používá středník a kódování cp1250
+try:
+    df = pd.read_csv(CSV_FILE, sep=';', encoding='cp1250')
+except FileNotFoundError:
+    st.error(f"Soubor {CSV_FILE} nebyl nalezen. Zkontrolujte cestu.")
+    st.stop()
+except Exception as e:
+    st.error(f"Chyba při načítání CSV: {e}")
+    st.stop()
 
 st.title("Kontrola podpory HW pro vozidla")
 
@@ -37,7 +44,6 @@ if submitted:
                     st.write(f"**NKP příkaz:** {radek['NKP']}")
                 if 'Zapojeni' in df.columns and pd.notna(radek.get('Zapojeni')):
                     st.write(f"**Zapojení:** {radek['Zapojeni']}")
-            print("-")
         else:
             st.error("Ne, zadaná kombinace HW, výrobce a modelu nebyla nalezena.")
     else:

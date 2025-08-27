@@ -1,10 +1,10 @@
 import pandas as pd
 
 # Název souboru s tabulkou (musí být ve stejné složce jako tento skript)
-EXCEL_FILE = "podporovana_vozidla.xlsx"
+CSV_FILE = "podporovana_vozidla.csv"
 
-# Načtení Excelu
-df = pd.read_excel(EXCEL_FILE)
+# Načtení CSV
+df = pd.read_csv(CSV_FILE)
 
 while True:
     # Zadání od uživatele
