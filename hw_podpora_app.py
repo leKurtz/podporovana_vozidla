@@ -14,7 +14,7 @@ st.title("Kontrola podpory HW pro vozidla")
 
 # Formulář pro zadání vstupů
 with st.form("hledani_form"):
-    hw = st.text_input("Zadej typ HW (818, 820, Teltonika 150)").strip()
+    hw = st.text_input("Zadej typ HW (820, FMX150, FMX003)").strip()
     vyrobce = st.text_input("Zadej výrobce vozidla").strip()
     model = st.text_input("Zadej model vozidla").strip()
     submitted = st.form_submit_button("Hledat")
