@@ -37,7 +37,7 @@ if submitted:
             for _, radek in filtrovano.iterrows():
                 st.write("---")
                 if 'Model_+' in df.columns and pd.notna(radek.get('Model_+')):
-                    st.write(f"** ** {radek['Model_+']}")
+                    st.write(f"**- ** {radek['Model_+']}")
                 if 'Rok' in df.columns and pd.notna(radek.get('Rok')):
                     st.write(f"**Rok:** {radek['Rok']}")
                 if 'CMD' in df.columns and pd.notna(radek.get('CMD')):
