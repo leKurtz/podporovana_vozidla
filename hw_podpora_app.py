@@ -14,7 +14,7 @@ st.title("Kontrola podporovaných vozidel dle typu HW")
 
 # Formulář pro zadání vstupů
 with st.form("hledani_form"):
-    hw = st.text_input("Zadej typ HW 820, FMX150 nebo FMX003").strip()
+    hw = st.radio("Vyber typ HW:", ["820", "FMX150", "FMX003"])
     vyrobce = st.text_input("Zadej výrobce vozidla").strip()
     model = st.text_input("Zadej model vozidla").strip()
     submitted = st.form_submit_button("Hledat")
