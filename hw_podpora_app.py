@@ -34,8 +34,9 @@ if submitted:
                 st.write("---")
                 if 'Model' in df.columns and pd.notna(radek.get('Model')):
                     st.write(f"**Model:** {radek['Model']}")
-                if 'Rok' in df.columns and pd.notna(radek.get('Rok')):
-                    st.write(f"**Rok:** {radek['Rok']}")
+                if 'Rok_od' in df.columns and 'Rok_do' in df.columns:
+                    if pd.notna(radek.get('Rok_od')) or pd.notna(radek.get('Rok_do')):
+                        st.write(f"**Rok:** {radek.get('Rok_od', '')} - {radek.get('Rok_do', '')}")
                 if 'CMD' in df.columns and pd.notna(radek.get('CMD')):
                     st.write(f"**CMD příkaz:** {radek['CMD']}")
                 if 'NKP' in df.columns and pd.notna(radek.get('NKP')):
