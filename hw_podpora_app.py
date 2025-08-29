@@ -23,7 +23,7 @@ if submitted:
     if hw and vyrobce and model:
         filtrovano = df[
             (df['HW'].astype(str).str.strip().str.lower() == hw.lower()) &
-            (df['Vyrobce'].astype(str).str.strip().str.lower() == vyrobce.lower()) &
+            (df['Vyrobce'].astype(str).str.strip().str.lower().str.contains(vyrobce.lower(), na=False)) &
             (df['Model'].astype(str).str.strip().str.lower().str.contains(model.lower(), na=False))
         ]
 
