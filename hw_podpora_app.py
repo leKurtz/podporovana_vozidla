@@ -10,7 +10,7 @@ try:
 except UnicodeDecodeError:
     df = pd.read_csv(CSV_FILE, sep=';', encoding='cp1250')
 
-st.title("Kontrola podporovaných vozidel dle typu HW")
+st.markdown("<p style='font-size:20px;'>Kontrola podporovaných vozidel dle typu HW</p>", unsafe_allow_html=True)
 
 # Formulář pro zadání vstupů
 with st.form("hledani_form"):
