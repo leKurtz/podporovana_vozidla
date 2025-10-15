@@ -43,6 +43,10 @@ if submitted:
                     st.write(f"**NKP příkaz:** {radek['NKP']}")
                 if 'Zapojeni' in df.columns and pd.notna(radek.get('Zapojeni')):
                     st.write(f"**Zapojení:** {radek['Zapojeni']}")
+                if 'CAN_2_T' in df.columns and pd.notna(radek.get('CAN_2_T')):
+                    st.write(f"**Na dva CANy:** {radek['CAN_2_T']}")
+                if 'CAN_2_820' in df.columns and pd.notna(radek.get('CAN_2_820')):
+                    st.write(f"**Na dva CANy:** {radek['CAN_2_820']}")
                 if 'Tachometr' in df.columns and pd.notna(radek.get('Tachometr')):
                     st.write(f"**Tachometr:** {radek['Tachometr']}")
                 if 'Nadrz litry' in df.columns and pd.notna(radek.get('Nadrz litry')):
